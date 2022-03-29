@@ -16,6 +16,6 @@ const plantSchema = new Schema({
 // maintenance: {type: "High" | "Medium" | "Low"},
 // light: {type: "Direct" | "Indirect"}
 
-const Plant = mongoose.model('Item', plantSchema);
+const Plant = mongoose.model('Plant', plantSchema);
 
 module.exports = Plant;

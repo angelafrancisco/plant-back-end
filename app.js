@@ -1,40 +1,45 @@
-require('dotenv').config();
 const express = require('express');
+const methodOverride = require('method-override')
 const { urlencoded } = require('express');
-const mongoose = require('mongoose');
+const session = require('express-session')
 const cors = require('cors');
 const morgan = require('morgan');
+const MongoDBStore = require('connect-mongodb-session')(session)
+require('dotenv').config();
+require('./db-utils/connect')
 const app = express();
 
-// db utils
-// connect to mongodb
-const mongoURI = process.env.MONGO_URI;
-// MONGO_URI link in .env file!
-// connect to mongo
-const db = mongoose.connection;
-// when connected to mongo it displays this message
-mongoose.connect(mongoURI, () => console.log('mongo connected:', mongoURI));
-db.on('error', (err) => console.log(err.message + ' is Mongod not running?'));
-db.on('connected', () => console.log('mongo connected: ', mongoURI));
-db.on('disconnected', () => console.log('mongo disconnected'));
+const store = new MongoDBStore({
+    uri: process.env.MONGO_URI,
+    collection: 'mySessions'
+});
 
 // controllers
 const plantController = require('./controllers/plantController');
+// const userController = require('./controllers/userController');
 
 // middleware
-// morgan is a logging middleware library, logs each request as it comes in
+app.use(require('./middleware/logger'))
+const isLoggedIn = require('./middleware/isLoggedIn')
+app.use(require('./middleware/isLoggedIn'))
 app.use(morgan('short'));
-// cors lets express accept requests other than itself (cross origin requests)
 app.use(cors());
-// public folder for assets
 app.use(express.static("public"));
-// populate req.body from forms, if none returns empty object
+app.use(methodOverride('_method'))
 app.use(express.urlencoded({ extended: true }));
-// parses json
 app.use(express.json());
+
+// NEW SESSION OBJECT
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: store
+}));
 
 // routes in itemController
 app.use('/plants', plantController);
+// app.use('/user', userController);
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {

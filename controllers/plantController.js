@@ -1,15 +1,24 @@
 const express = require('express');
 const router = express();
-const Item = require('../models/item');
+const Plant = require('../models/plant');
+// ___________________
+// 7 Restful Routes
+// ___________________
+// INDEX  : GET    '/plants'          1/7
+// SHOW   : GET    '/plants/:id'      2/7
+// NEW    : GET    '/plants/new'      3/7
+// CREATE : POST   '/plants'          4/7
+// EDIT   : GET    '/plants/:id/edit' 5/7
+// UPDATE : PUT    '/plants/:id'      6/7
+// DELETE : DELETE '/plants/:id'      7/7
 
-// index - get
+// INDEX  : GET    '/plants'          1/7
 router.get('/', async (req, res) => {
     try {
-        const items = await Item.find();
+        const plants = await Plant.find();
         res.send({
-            // if good send sucessful request with the items, react needs to know if response is good or bad
             success: true,
-            data: items
+            data: plants
         });
     } catch (err) {
         res.send({
@@ -19,34 +28,16 @@ router.get('/', async (req, res) => {
     }
 });
 
-// create - post
-router.post('/', async (req, res) => {
-    // console.log(req.body)
-    try {
-        // we want new item to get added to state - update database, update state
-        const newItem = await Item.create(req.body);
-        res.send({
-            success: true,
-            data: newItem
-        });
-    } catch (err) {
-        res.send({
-            success: false,
-            data: err.message
-        });
-    }
-});
-
-// show one - get
+// SHOW   : GET    '/plants/:id'      2/7
 router.get('/:id', async (req, res) => {
     try {
-        const item = await Item.findById(req.params.id);
-        if (!item) {
-            throw new Error("No item by that id here!")
+        const plant = await Plant.findById(req.params.id);
+        if (!plant) {
+            throw new Error("No plant by that id here!")
         }
         res.send({
             success: true,
-            data: item
+            data: plant
         });
     } catch (err) {
         console.log(err)
@@ -57,13 +48,17 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// delete
-router.delete('/:id', async (req, res) => {
+// NEW    : GET    '/plants/new'      3/7
+
+
+// CREATE : POST   '/plants'          4/7
+router.post('/', async (req, res) => {
+    // console.log(req.body)
     try {
-        const item = await Item.findByIdAndDelete(req.params.id);
+        const newPlant = await Plant.create(req.body);
         res.send({
             success: true,
-            data: item
+            data: newPlant
         });
     } catch (err) {
         res.send({
@@ -73,13 +68,32 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-// update - put
+// EDIT   : GET    '/plants/:id/edit' 5/7
+
+
+// UPDATE : PUT    '/plants/:id'      6/7
 router.put('/:id', async (req, res) => {
     try {
-        const item = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const plant = await Plant.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.send({
             success: true,
-            data: item
+            data: plant
+        });
+    } catch (err) {
+        res.send({
+            success: false,
+            data: err.message
+        });
+    }
+});
+
+// DELETE : DELETE '/plants/:id'      7/7
+router.delete('/:id', async (req, res) => {
+    try {
+        const plant = await Plant.findByIdAndDelete(req.params.id);
+        res.send({
+            success: true,
+            data: plant
         });
     } catch (err) {
         res.send({
