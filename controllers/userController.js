@@ -1,24 +1,26 @@
 const express = require('express');
+require("dotenv").config();
 const router = express();
-const Plant = require('../models/plant');
 const User = require('../models/user');
+const Plant = require('../models/plant');
+const bcrypt = require("bcryptjs");
 
-// CREATE : POST   '/plants'          1/4
-// READ   : GET    '/plants'          2/4 (INDEX)
-// UPDATE : PUT    '/plants/:id'      3/4
-// DELETE : DELETE '/plants/:id'      4/4
+// CREATE : POST   '/user'          1/4
+// READ   : GET    '/user'          2/4 (INDEX)
+// UPDATE : PUT    '/user/:id'      3/4
+// DELETE : DELETE '/user/:id'      4/4
 
-// SHOW   : GET    '/plants/:id'      
-// EDIT   : GET    '/plants/:id/edit' 
+// SHOW   : GET    '/user/:id'      
+// EDIT   : GET    '/user/:id/edit' 
 
-// CREATE : POST   '/plants'          1/4
+// CREATE : POST   '/user'          1/4
 router.post('/', async (req, res) => {
     // console.log(req.body)
     try {
-        const newPlant = await Plant.create(req.body);
+        const newUser = await User.create(req.body);
         res.send({
             success: true,
-            data: newPlant
+            data: newUser
         });
     } catch (err) {
         res.send({
@@ -28,13 +30,14 @@ router.post('/', async (req, res) => {
     }
 });
 
-// READ  : GET    '/plants'          2/4 (INDEX)
+// READ  : GET    '/user'          2/4 (INDEX)
 router.get('/', async (req, res) => {
     try {
-        const plants = await Plant.find();
+        // const currentUser = req.session.isLoggedIn
+        const user = await User.find();
         res.send({
             success: true,
-            data: plants
+            data: user
         });
     } catch (err) {
         res.send({
@@ -44,13 +47,13 @@ router.get('/', async (req, res) => {
     }
 });
 
-// UPDATE : PUT    '/plants/:id'      3/4
+// UPDATE : PUT    '/user/:id'      3/4
 router.put('/:id', async (req, res) => {
     try {
-        const plant = await Plant.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.send({
             success: true,
-            data: plant
+            data: user
         });
     } catch (err) {
         res.send({
@@ -60,13 +63,13 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// DELETE : DELETE '/plants/:id'      4/4
+// DELETE : DELETE '/user/:id'      4/4
 router.delete('/:id', async (req, res) => {
     try {
-        const plant = await Plant.findByIdAndDelete(req.params.id);
+        const user = await User.findByIdAndDelete(req.params.id);
         res.send({
             success: true,
-            data: plant
+            data: user
         });
     } catch (err) {
         res.send({
@@ -76,16 +79,16 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-// SHOW   : GET    '/plants/:id'
+// SHOW   : GET    '/user/:id'
 router.get('/:id', async (req, res) => {
     try {
-        const plant = await Plant.findById(req.params.id);
-        if (!plant) {
-            throw new Error("No plant by that id here!")
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            throw new Error("No user by that id here!")
         }
         res.send({
             success: true,
-            data: plant
+            data: user
         });
     } catch (err) {
         console.log(err)

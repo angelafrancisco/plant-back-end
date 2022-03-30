@@ -16,7 +16,7 @@ const store = new MongoDBStore({
 
 // controllers
 const plantController = require('./controllers/plantController');
-// const userController = require('./controllers/userController');
+const userController = require('./controllers/userController');
 
 // middleware
 app.use(require('./middleware/logger'))
@@ -37,11 +37,13 @@ app.use(session({
     store: store
 }));
 
-// routes in itemController
+// Controllers
 app.use('/plants', plantController);
-// app.use('/user', userController);
+app.use('/user', userController);
 
+// PORT
 const port = process.env.PORT || 3001;
+
 app.listen(port, () => {
     console.log('app is running! better go catch it on port', port);
 });
