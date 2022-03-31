@@ -3,11 +3,28 @@ const Schema = mongoose.Schema;
 
 const plantSchema = new Schema({
     name: { type: String }, // nickname, if blank use type
-    type: { type: String, required: true }, // show example in form i.e. succulent, jade, fiddle leaf
+    type: { type: String }, // show example in form i.e. succulent, jade, fiddle leaf
     image: { type: String }, // start with URL
-    potSize: { type: Number, required: true },
-    roomName: { type: "Bedroom" | "Dining Room" | "Kitchen" | "Living Room" | "Office" }, // room, dropdown menu
-    direction: { type: "N" | "S" | "E" | "W", required: true }, // window location, dropdown menu
+    potSize: { type: Number },
+    roomName: {       // will be dropdown menu
+        type: String,
+        enum: [
+            "Bedroom",
+            "Dining Room",
+            "Kitchen",
+            "Living Room",
+            "Office"
+        ]
+    },
+    direction: {     // window location, will be dropdown menu
+        type: String,
+        enum: [
+            "N",
+            "S",
+            "E",
+            "W"
+        ]
+    },
     userNotes: { type: String },
     // task is not editable by user, plant will only have 1 task at a time
     task: {
@@ -19,6 +36,7 @@ const plantSchema = new Schema({
 // FUTURE GOALS!!!
 // API to look up plant type
 // Image upload
+// roomName: { type: String } // custom user created name, ability to sort & group plants by roomName
 // sun: { type: "Full Sun" | "Indirect Sun" | "Shade"} // API generated?
 // petFriendly: { type: Boolean }, // auto generated? based on API toxicity level?
 // maintenance: { type: "High" | "Medium" | "Low" }, // auto generated based on API data?

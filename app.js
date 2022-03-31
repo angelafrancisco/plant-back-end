@@ -14,20 +14,20 @@ const store = new MongoDBStore({
     collection: 'mySessions'
 });
 
-// controllers
-const plantController = require('./controllers/plantController');
-const userController = require('./controllers/userController');
-
 // middleware
 app.use(require('./middleware/logger'))
-const isLoggedIn = require('./middleware/isLoggedIn')
-app.use(require('./middleware/isLoggedIn'))
+// const isLoggedIn = require('./middleware/isLoggedIn')
+// app.use(require('./middleware/isLoggedIn'))
 app.use(morgan('short'));
 app.use(cors());
 app.use(express.static("public"));
 app.use(methodOverride('_method'))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// controllers
+const plantController = require('./controllers/plantController');
+const userController = require('./controllers/userController');
 
 // NEW SESSION OBJECT
 app.use(session({

@@ -3,7 +3,7 @@ require("dotenv").config();
 const router = express();
 const User = require('../models/user');
 const Plant = require('../models/plant');
-const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcryptjs");
 
 // CREATE : POST   '/user'          1/4
 // READ   : GET    '/user'          2/4 (INDEX)
