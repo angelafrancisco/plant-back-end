@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
     try {
         const newPlant = await Plant.create(req.body);
         console.log(newPlant)
-        console.log(req.session.uer._id)
+        console.log(req.session.user._id)
         res.send({
             success: true,
             data: newPlant
