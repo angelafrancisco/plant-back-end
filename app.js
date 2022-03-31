@@ -9,6 +9,7 @@ require('dotenv').config();
 require('./db-utils/connect')
 // const cloudinary = require('cloudinary').v2;
 const app = express();
+app.use(cors());
 
 const User = require('./models/user');
 
@@ -18,7 +19,6 @@ const store = new MongoDBStore({
 });
 
 // app.options("", cors());
-app.use(cors());
 // app.use(function (req, res, next) {
 //     res.header("Access-Control-Allow-Origin", "*");
 //     res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
@@ -33,8 +33,8 @@ app.use(cors());
 // });
 app.use(express.static("public"));
 app.use(require('./middleware/logger'))
-const isLoggedIn = require('./middleware/isLoggedIn')
-app.use(require('./middleware/isLoggedIn'))
+// const isLoggedIn = require('./middleware/isLoggedIn')
+// app.use(require('./middleware/isLoggedIn'))
 app.use(morgan('short'));
 app.use(methodOverride('_method'))
 app.use(express.urlencoded({ extended: true }));
