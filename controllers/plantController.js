@@ -2,6 +2,9 @@ const express = require('express');
 const router = express();
 const Plant = require('../models/plant');
 const User = require('../models/user');
+// const multer = require('multer')
+// const cloudinary = require('cloudinary')
+// const upload = multer({ dest: './uploads/' })
 
 // CREATE : POST   '/plants'          1/4
 // READ   : GET    '/plants'          2/4 (INDEX)
@@ -13,9 +16,13 @@ const User = require('../models/user');
 
 // CREATE : POST   '/plants'          1/4
 router.post('/', async (req, res) => {
+    // try for image upload
+    // router.post ('/', upload.single('img'), async (req, res)=>{
     // console.log(req.body)
     try {
         const newPlant = await Plant.create(req.body);
+        console.log(newPlant)
+        console.log(req.session.uer._id)
         res.send({
             success: true,
             data: newPlant
@@ -60,10 +67,32 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+// update for photo img?
+// router.put('/update-photo/:id', upload.single('img'), async (req, res) => {
+//     try {
+//         const plant = await Plant.findByIdAndUpdate(req.params.id, req.body, { new: true });
+//         console.log(req.body);
+//         console.log(req.params.id);
+//         console.log(req.body.img);
+//         res.send({
+//             success: true,
+//             data: plant
+//         });
+//     } catch (err) {
+//         res.send({
+//             success: false,
+//             data: err.message
+//         });
+//     }
+// });
+
 // DELETE : DELETE '/plants/:id'      4/4
 router.delete('/:id', async (req, res) => {
     try {
         const plant = await Plant.findByIdAndDelete(req.params.id);
+        if (!plant) {
+            throw new Error('Oops, no plant with that ID here!');
+        }
         res.send({
             success: true,
             data: plant
@@ -80,15 +109,11 @@ router.delete('/:id', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const plant = await Plant.findById(req.params.id);
-        if (!plant) {
-            throw new Error("No plant by that id here!")
-        }
         res.send({
             success: true,
             data: plant
         });
     } catch (err) {
-        console.log(err)
         res.send({
             success: false,
             data: err.message

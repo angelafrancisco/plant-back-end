@@ -7,29 +7,29 @@ const morgan = require('morgan');
 const MongoDBStore = require('connect-mongodb-session')(session)
 require('dotenv').config();
 require('./db-utils/connect')
+// const cloudinary = require('cloudinary').v2;
 const app = express();
+
+const User = require('./models/user');
 
 const store = new MongoDBStore({
     uri: process.env.MONGO_URI,
     collection: 'mySessions'
 });
 
-// middleware
+app.use(express.static("public"));
 app.use(require('./middleware/logger'))
-// const isLoggedIn = require('./middleware/isLoggedIn')
-// app.use(require('./middleware/isLoggedIn'))
+const isLoggedIn = require('./middleware/isLoggedIn')
+app.use(require('./middleware/isLoggedIn'))
 app.use(morgan('short'));
 app.use(cors());
-app.use(express.static("public"));
 app.use(methodOverride('_method'))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// controllers
 const plantController = require('./controllers/plantController');
 const userController = require('./controllers/userController');
 
-// NEW SESSION OBJECT
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -37,11 +37,26 @@ app.use(session({
     store: store
 }));
 
-// Controllers
+// cloudinary.config({
+//     cloud_name: '',
+//     api_key: process.env.CLOUDINARY_API_KEY,
+//     api_secret: process.env.CLOUDINARY_API_SECRET
+// });
+
+app.use(async (req, res, next) => {
+    res.locals.isLoggedIn = req.session.isLoggedIn
+    if (req.session.isLoggedIn) {
+        const currentUser = await User.findById(req.session.userId)
+        res.locals.username = currentUser.username
+        res.locals.userId = req.session.userId.toString()
+    }
+    next()
+})
+
 app.use('/plants', plantController);
 app.use('/user', userController);
 
-// PORT
+
 const port = process.env.PORT || 3001;
 
 app.listen(port, () => {
