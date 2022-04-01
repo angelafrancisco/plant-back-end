@@ -6,23 +6,14 @@ const plantSchema = new Schema({
     type: { type: String }, // show example in form i.e. succulent, jade, fiddle leaf
     image: { type: String }, // start with URL
     potSize: { type: Number },
-    roomName: {       // will be dropdown menu
-        type: String,
-        enum: [
-            "Bedroom",
-            "Dining Room",
-            "Kitchen",
-            "Living Room",
-            "Office"
-        ]
-    },
+    roomName: { type: String },
     direction: {     // window location, will be dropdown menu
         type: String,
         enum: [
-            "N",
-            "S",
-            "E",
-            "W"
+            "North",
+            "South",
+            "East",
+            "West"
         ]
     },
     userNotes: { type: String },
