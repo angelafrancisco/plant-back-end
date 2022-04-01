@@ -5,6 +5,7 @@ const User = require('../models/user');
 const Plant = require('../models/plant');
 const bcrypt = require("bcryptjs");
 const isLoggedIn = require('../middleware/isLoggedIn')
+// cloudinary
 // const multer = require('multer')
 // const cloudinary = require('cloudinary')
 // const upload = multer({ dest: './uploads/' })
