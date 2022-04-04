@@ -4,14 +4,18 @@
 
 PlantPet - A full-stack MERN web application for the plant obsessed, plant newbies, and aspiring plant parents. Track individual plant watering, add photos, and personalized plant care!
 
+
 ## Deployed Website
 
 Hosted via Heroku:
 
 https://plantpet.herokuapp.com/
 
-## Front-End Repository
-https://github.com/angelafrancisco/plant-front-end
+
+## Repositories
+- Front-End: https://github.com/angelafrancisco/plant-front-end
+- Back-End: https://github.com/angelafrancisco/plant-back-end
+
 
 ## Tech Stack (MERN)
 
@@ -22,17 +26,14 @@ https://github.com/angelafrancisco/plant-front-end
 - HTML/CSS/JavaScript
 
 
-## Wireframing
+## User Stories
 
-Homepage
-<!-- image -->
+- Homepage shows app features and links to login or register an account.
+- User can create a new account and login.
+- User can add plants to their "My Plants" section, creating a name, adding plant type, image url, room name, window direction, and notes about plant.
+- Once a plant is added, user can edit or delete plant.
+- User can complete watering tasks in their "My Tasks" section, as they are auto-generated after creating a new plant.
 
-User Home Dashboard
-<!-- image -->
-
-<!-- ## User Flowchart -->
-
-<!-- show images here -->
 
 ## GA Project Requirements (MVP)
 
@@ -49,8 +50,15 @@ User Home Dashboard
 ## Project Stretch Goals
 
 - Wireframing (created via Figma)
-- CSS
-- React routing
+- Custom CSS
+- Favicon/Logo
+- Plant modals (add new plant / edit plant)
+- Form dropdown menu
+- React routing:
+    - Homepage: `'/'`
+    - Login: `'/login'`
+    - Register: `'/register'`
+    - User Dashboard: `'/dashboard'`
 
 
 ## Future Goals
@@ -62,7 +70,10 @@ These are additions I wasn't able to get to within project timeframe, but want t
     - `petFriendly: { type: Boolean }` (possibly based on toxicity level)
     - `maintenance: { type: "High" | "Medium" | "Low" }` (possibly based on hardiness)
     - `waterSched: { type: Number }` (possibly based on drought/humidity resistance)
-- Finished user route (username and password authentication on FE)
+- Finish second CRUD for:
+    - Create new user
+    - User login/logout (username and password authentication on FE)
+    - Update/Delete user account
 - Search functionality for user added plants
 - Upcoming Tasks React component
 - User image upload via Cloudinary
