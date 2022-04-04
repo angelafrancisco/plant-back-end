@@ -29,6 +29,7 @@ https://plantpet.herokuapp.com/
 ## User Stories
 
 - Homepage shows app features and links to login or register an account.
+    - _(Note: Currently user register/login not in production. Register/Login buttons will take you to the user dashboard.)_
 - User can create a new account and login.
 - User can add plants to their "My Plants" section, creating a name, adding plant type, image url, room name, window direction, and notes about plant.
 - Once a plant is added, user can edit or delete plant.
