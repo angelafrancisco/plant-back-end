@@ -9,7 +9,7 @@ PlantPet - A full-stack MERN web application for the plant obsessed, plant newbi
 
 Hosted via Heroku:
 
-https://plantpet.herokuapp.com/
+https://plantpet-app.herokuapp.com/
 
 
 ## Repositories
@@ -19,10 +19,10 @@ https://plantpet.herokuapp.com/
 
 ## Tech Stack (MERN)
 
-- MongoDB/Mongoose
-- Express
-- React
-- Node.js
+- M: MongoDB/Mongoose
+- E: Express
+- R: React
+- N: Node.js
 - HTML/CSS/JavaScript
 
 
